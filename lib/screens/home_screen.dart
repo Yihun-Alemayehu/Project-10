@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_10/bloc/social_media_bloc.dart';
 import 'package:project_10/data/models/post_model.dart';
+import 'dart:developer';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -47,7 +48,11 @@ Widget _buildPostsList(List<Post> posts) {
         return ListTile(
           title: Text(posts[index].username),
           subtitle: Text(posts[index].content),
-          trailing: Text(posts[index].likes.toString()),
+          trailing: GestureDetector(
+            onTap: () {
+              context.read<SocialMediaBloc>().add(LikePostEvent(post: posts[index]));
+            },
+            child: Text('${posts[index].likes.toString()} Likes')),
         );
       },
     ),
