@@ -49,7 +49,7 @@ class PostDetailScreen extends StatelessWidget {
                               post: post, comment: _controller.text),
                         );
                         _controller.clear();
-                    // context.read<SocialMediaBloc>().add(FetchPostsEvent());
+                    // context.read<SocialMediaBloc>().add(FetchCommentsEvent(post: post));
                   },
                   icon: const Icon(Icons.send),
                 )
@@ -62,6 +62,12 @@ class PostDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.read<SocialMediaBloc>().add(FetchCommentsEvent(post: post));
+            },
+            child: const Icon(Icons.refresh),
+          ),
     );
   }
 

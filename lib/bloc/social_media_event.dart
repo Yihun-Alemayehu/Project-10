@@ -9,6 +9,15 @@ abstract class SocialMediaEvent extends Equatable {
 
 class FetchPostsEvent extends SocialMediaEvent {}
 
+class FetchCommentsEvent extends SocialMediaEvent {
+  final Post post;
+
+  const FetchCommentsEvent({required this.post});
+
+  @override
+  List<Object> get props => [post];
+}
+
 class LikePostEvent extends SocialMediaEvent{
   final Post post;
 

@@ -1,3 +1,5 @@
+
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:project_10/data/models/post_model.dart';
@@ -45,10 +47,24 @@ class SocialMediaBloc extends Bloc<SocialMediaEvent, SocialMediaState> {
           updatedPosts[postIndex] = updatedPosts[postIndex].copyWith(comments: updatedComments);
         }
         emit(SocialMediaLoaded(posts: updatedPosts));
-        // emit(CommentLoaded(comments: updatedComments));
+        // if(state is FetchCommentsEvent){
+          // emit(CommentLoaded(comments: updatedComments));
+        // }
+       
       } catch (e) {
         emit(SocialMediaError(errorMessage: 'Error: $e'));
       }
+    });
+    on<FetchCommentsEvent>((event, emit) {
+      final List<Post> updatedPosts = List.from((state as SocialMediaLoaded).posts);
+        final postIndex = updatedPosts.indexWhere((post) => event.post.id == post.id);
+        final List<Comment> updatedComments = List.from(updatedPosts[postIndex].comments);
+        if(postIndex != -1){
+          
+          // updatedComments.add(Comment(username: event.post.username, content: event.comment));
+          updatedPosts[postIndex] = updatedPosts[postIndex].copyWith(comments: updatedComments);
+        }
+        emit(CommentLoaded(comments: updatedComments));
     });
   }
 }
