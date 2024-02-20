@@ -19,11 +19,11 @@ class LikePostEvent extends SocialMediaEvent{
 }
 
 class AddCommentEvent extends SocialMediaEvent{
-  final String postId;
+  final Post post;
   final String comment;
 
-  const AddCommentEvent({required this.postId, required this.comment});
+  const AddCommentEvent({required this.post, required this.comment});
 
   @override
-  List<Object> get props => [postId, comment];
+  List<Object> get props => [post, comment];
 }

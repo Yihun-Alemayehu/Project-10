@@ -1,12 +1,16 @@
 // screens/post_detail_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_10/bloc/social_media_bloc.dart';
 import 'package:project_10/data/models/post_model.dart';
 
 class PostDetailScreen extends StatelessWidget {
   final Post post;
 
-  const PostDetailScreen({required this.post});
+  PostDetailScreen({required this.post});
+
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,34 @@ class PostDetailScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(post.content),
             const SizedBox(height: 16),
-            const Text('Comments', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                        hintText: 'Comment here...',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.read<SocialMediaBloc>().add(
+                          AddCommentEvent(
+                              post: post, comment: _controller.text),
+                        );
+                        _controller.clear();
+                    // context.read<SocialMediaBloc>().add(FetchPostsEvent());
+                  },
+                  icon: const Icon(Icons.send),
+                )
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text('Comments',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             _buildCommentList(post.comments),
           ],
         ),
@@ -35,16 +66,18 @@ class PostDetailScreen extends StatelessWidget {
   }
 
   Widget _buildCommentList(List<Comment> comments) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: comments.length,
-      itemBuilder: (context, index) {
-        final comment = comments[index];
-        return ListTile(
-          title: Text(comment.username),
-          subtitle: Text(comment.content),
-        );
-      },
+    return Expanded(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: comments.length,
+        itemBuilder: (context, index) {
+          final comment = comments[index];
+          return ListTile(
+            title: Text(comment.username),
+            subtitle: Text(comment.content),
+          );
+        },
+      ),
     );
   }
 }

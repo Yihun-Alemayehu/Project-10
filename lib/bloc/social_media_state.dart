@@ -20,6 +20,15 @@ class SocialMediaLoaded extends SocialMediaState {
   List<Object> get props => [posts];
 }
 
+class CommentLoaded extends SocialMediaState {
+  final List<Comment> comments;
+
+  const CommentLoaded({required this.comments});
+
+  @override
+  List<Object> get props => [comments];
+}
+
 class SocialMediaError extends SocialMediaState {
   final String errorMessage;
 

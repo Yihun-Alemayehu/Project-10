@@ -36,7 +36,16 @@ class SocialMediaBloc extends Bloc<SocialMediaEvent, SocialMediaState> {
     });
     on<AddCommentEvent>((event, emit) {
       try {
-        
+        final List<Post> updatedPosts = List.from((state as SocialMediaLoaded).posts);
+        final postIndex = updatedPosts.indexWhere((post) => event.post.id == post.id);
+        final List<Comment> updatedComments = List.from(updatedPosts[postIndex].comments);
+        if(postIndex != -1){
+          
+          updatedComments.add(Comment(username: event.post.username, content: event.comment));
+          updatedPosts[postIndex] = updatedPosts[postIndex].copyWith(comments: updatedComments);
+        }
+        emit(SocialMediaLoaded(posts: updatedPosts));
+        // emit(CommentLoaded(comments: updatedComments));
       } catch (e) {
         emit(SocialMediaError(errorMessage: 'Error: $e'));
       }
