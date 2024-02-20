@@ -4,6 +4,8 @@ import 'package:project_10/bloc/social_media_bloc.dart';
 import 'package:project_10/data/models/post_model.dart';
 import 'dart:developer';
 
+import 'package:project_10/screens/post_details_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -46,13 +48,23 @@ Widget _buildPostsList(List<Post> posts) {
       itemCount: posts.length,
       itemBuilder: (context, index) {
         return ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PostDetailScreen(post: posts[index]),
+              ),
+            );
+          },
           title: Text(posts[index].username),
           subtitle: Text(posts[index].content),
           trailing: GestureDetector(
-            onTap: () {
-              context.read<SocialMediaBloc>().add(LikePostEvent(post: posts[index]));
-            },
-            child: Text('${posts[index].likes.toString()} Likes')),
+              onTap: () {
+                context
+                    .read<SocialMediaBloc>()
+                    .add(LikePostEvent(post: posts[index]));
+              },
+              child: Text('${posts[index].likes.toString()} Likes')),
         );
       },
     ),

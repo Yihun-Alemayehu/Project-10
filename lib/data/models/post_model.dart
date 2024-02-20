@@ -4,14 +4,14 @@ class Post {
   final String username;
   final String content;
   int likes;
-  final List<Comment>? comments;
+  final List<Comment> comments;
 
   Post({
     required this.id,
     required this.username,
     required this.content,
     this.likes = 0,
-     this.comments,
+     this.comments = const [],
   });
 
   Post copyWith({
