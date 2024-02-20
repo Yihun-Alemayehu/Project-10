@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_10/bloc/social_media_bloc.dart';
 import 'package:project_10/data/models/post_model.dart';
 
+
 class PostDetailScreen extends StatelessWidget {
   final Post post;
 
-  PostDetailScreen({required this.post});
+  PostDetailScreen({super.key, required this.post});
 
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

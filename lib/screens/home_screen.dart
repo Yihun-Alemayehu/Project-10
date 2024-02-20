@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_10/bloc/social_media_bloc.dart';
 import 'package:project_10/data/models/post_model.dart';
-import 'dart:developer';
 
 import 'package:project_10/screens/post_details_screen.dart';
 
